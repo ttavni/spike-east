@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+/* ===== Spike v2 design tokens ===== */
+@theme {
+  --color-bg: #0c0e10;
+  --color-bg-deep: #08090a;
+  --color-surface: #15181b;
+  --color-panel: #101316;
+  --color-raised: #1b1f23;
+  --color-fg: #f4f5f6;
+  --color-muted: #8a9196;
+  --color-dim: #6b7177;
+  --color-dimmer: #5a6168;
+  --color-accent: #cbfb4f;
+  --color-ink: #0c0e10;
+  --color-win: #5cd37d;
+  --color-loss: #ff6b6b;
+  --color-gold: #ffcf5c;
+  --color-silver: #c4cdd6;
+  --color-bronze: #e0935a;
+  --color-whatsapp: #25d366;
+
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #08090a;
+  color: #f4f5f6;
+  color-scheme: dark;
+  overscroll-behavior-y: none;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01";
+}
+
+::selection {
+  background: #cbfb4f;
+  color: #0c0e10;
+}
+
+button {
+  font-family: inherit;
+}
+
+.spkscroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===== Animations (ported from the design) ===== */
+@keyframes spkToast {
+  0% { transform: translate(-50%, -14px); opacity: 0; }
+  100% { transform: translate(-50%, 0); opacity: 1; }
+}
+@keyframes spkPop {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes spkUp {
+  0% { transform: translateY(10px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes spkSpin {
+  to { transform: rotate(360deg); }
+}
+@keyframes spkSheet {
+  0% { transform: translateY(100%); }
+  100% { transform: translateY(0); }
+}
+@keyframes spkRing {
+  0% { transform: scale(0.4); opacity: 0.8; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+@keyframes spkCard {
+  0% { transform: translateX(40px) scale(0.96); opacity: 0; }
+  100% { transform: translateX(0) scale(1); opacity: 1; }
+}
+
+/* Press feedback used across tappable elements */
+.spk-press { transition: opacity 0.12s, transform 0.12s; }
+.spk-press:active { opacity: 0.6; }
+
+/* Controls you press and hold, or drag: a long press must not start a text selection
+   or pop iOS's Copy/Look Up callout. This has to live in the stylesheet rather than an
+   inline style — React doesn't vendor-prefix, and Safari only understood unprefixed
+   `user-select` from 17, so inline `userSelect` alone does nothing on older iPhones.
+   `-webkit-touch-callout` has no unprefixed form at all. */
+.spk-noselect,
+.spk-noselect * {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Horizontal score rail: snap-scrolls, no visible scrollbar. touch-action stays
+   pan-x (set inline) so the flick gesture it's built on still works. */
+.spk-rail::-webkit-scrollbar { display: none; }

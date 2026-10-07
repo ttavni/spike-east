@@ -1,0 +1,48 @@
+name: DB migrate
+
+# Applies Drizzle migrations to the PRODUCTION database. Runs only on pushes to main (i.e. after
+# a pull request is merged) that touch the schema or migrations, or when a maintainer runs it by
+# hand. Pull requests — including ones from forks — never run this and never see its secret.
+#
+# A migration is arbitrary SQL run against real data, and drizzle.config.ts is code that runs
+# with the production URL in hand, so review every change to them like a production deploy
+# (CODEOWNERS routes them to the owner). The job uses the `production-db` environment, which
+# requires the owner's approval before each run (Settings → Environments).
+#
+# Required secret: DATABASE_URL (Neon pooled URL), stored on the `production-db` environment.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "drizzle/**"
+      - "src/db/schema.ts"
+      - "drizzle.config.ts"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: db-migrate
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: production-db
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+      # No install scripts in the one job that holds the production database URL: only the code
+      # drizzle-kit actually imports runs here, not every dependency's postinstall.
+      - run: npm ci --ignore-scripts
+      - name: Run migrations
+        run: npx drizzle-kit migrate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}

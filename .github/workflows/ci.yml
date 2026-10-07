@@ -1,0 +1,45 @@
+name: CI
+
+# Typecheck, tests and a production build on every pull request (forks included) and on main.
+# Needs no secrets: the build is given throwaway values, and nothing here can reach a database.
+# This is the required status check that the `main` ruleset waits for.
+#
+# Actions are pinned to a commit, not a tag (a tag can be moved to point at other code); the
+# comment says which release it is, and Dependabot bumps both together.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+      # No install scripts: nothing here needs one, and a compromised dependency's postinstall
+      # is the classic way into a CI runner.
+      - run: npm ci --ignore-scripts
+      - name: Typecheck
+        run: npx tsc --noEmit -p .
+      - name: Tests
+        run: npm test
+      - name: Build
+        run: npm run build
+        env:
+          # The build imports the DB module but never connects; these only satisfy its checks.
+          DATABASE_URL: postgres://ci:ci@localhost:5432/ci
+          AUTH_SECRET: ci-only-not-a-real-secret-0000000000000000
