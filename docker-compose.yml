@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16
+    container_name: spike-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: spike
+      POSTGRES_PASSWORD: spike
+      POSTGRES_DB: spike
+    ports:
+      - "5432:5432"
+    volumes:
+      - spike-db-data:/var/lib/postgresql/data
+
+volumes:
+  spike-db-data:

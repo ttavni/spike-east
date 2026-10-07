@@ -1,0 +1,16 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg" cx="42%" cy="30%" r="90%"><stop offset="0%" stop-color="#1c2227"/><stop offset="62%" stop-color="#0f1316"/><stop offset="100%" stop-color="#0C0E10"/></radialGradient>
+    <radialGradient id="ball" cx="38%" cy="34%" r="75%"><stop offset="0%" stop-color="#eaffb0"/><stop offset="55%" stop-color="#CBFB4F"/><stop offset="100%" stop-color="#a9d72f"/></radialGradient>
+    <linearGradient id="streak" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#CBFB4F" stop-opacity="0"/><stop offset="100%" stop-color="#CBFB4F"/></linearGradient>
+    <clipPath id="ring"><circle cx="256" cy="262" r="150"/></clipPath>
+  </defs><rect width="512" height="512" rx="114" fill="url(#bg)"/>
+  <circle cx="256" cy="262" r="150" fill="none" stroke="#CBFB4F" stroke-width="10"/>
+  <g clip-path="url(#ring)" stroke="#CBFB4F" stroke-width="7" opacity="0.30">
+    <line x1="256" y1="100" x2="256" y2="424"/><line x1="94" y1="262" x2="418" y2="262"/>
+    <line x1="150" y1="156" x2="362" y2="368"/><line x1="362" y1="156" x2="150" y2="368"/>
+    <circle cx="256" cy="262" r="86" fill="none"/>
+  </g>
+  <line x1="372" y1="150" x2="300" y2="222" stroke="url(#streak)" stroke-width="46" stroke-linecap="round"/>
+  <circle cx="290" cy="232" r="64" fill="#0C0E10"/>
+  <circle cx="290" cy="232" r="50" fill="url(#ball)"/></svg>

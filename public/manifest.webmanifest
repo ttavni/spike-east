@@ -1,0 +1,24 @@
+{
+  "name": "East London Roundnet",
+  "short_name": "Roundnet",
+  "description": "Our roundnet ladder. Log games, see where you stand.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0c0e10",
+  "theme_color": "#0c0e10",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+name: Bug report
+description: Something in the app is broken or wrong.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. If it's a security problem, please don't file it here: use the
+        Security tab → **Report a vulnerability** instead.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the Log screen
+        2. ...
+  - type: input
+    id: device
+    attributes:
+      label: Phone and browser
+      placeholder: iPhone 15, Safari (installed to home screen)
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Drag images in here. Please crop out anything you'd rather not share.

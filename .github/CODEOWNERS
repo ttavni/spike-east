@@ -1,0 +1,22 @@
+# Every change needs the maintainer's review before it can merge (the `main` ruleset requires a
+# code owner's approval). The paths below are already covered by `*`; they're listed so the
+# sensitive ones keep a named owner if more maintainers join.
+*                       @ttavni
+
+# Runs against the production database after merge.
+/drizzle/               @ttavni
+/drizzle.config.ts      @ttavni
+/src/db/                @ttavni
+
+# Sign-in, sessions, rate limits and the server actions that use them.
+/src/lib/auth/          @ttavni
+/src/app/actions/       @ttavni
+
+# How code is checked, built, deployed and run.
+/.github/               @ttavni
+/.claude/               @ttavni
+/package.json           @ttavni
+/package-lock.json      @ttavni
+/next.config.ts         @ttavni
+/vercel.json            @ttavni
+/scripts/               @ttavni
